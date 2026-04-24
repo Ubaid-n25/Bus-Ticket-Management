@@ -1,0 +1,209 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <windows.h>
+#include <cctype>  // For toupper()
+
+using namespace std;
+
+// Function to display ticket details
+void ticket(string bookRef, string name1, string name2, string name3, string gender, string cnic,
+            string mobNum, long long int age, string city1, string city2, int d, int m, int t,
+            string seatPre, double ticprice) {
+    system("color B8");
+    cout << "\n";
+    cout << "\t\t-------------------------------------------\n";
+    cout << "\t\t       YOUR BUS TICKET CONFIRMATION       \n";
+    cout << "\t\t-------------------------------------------\n";
+    cout << "\n";
+    cout << "\tBooking Reference: " << bookRef << "\n";
+    cout << "\tPassenger Name: " << name1 << " " << name2 << "\n";
+    cout << "\tFather's Name: " << name3 << "\n";
+    cout << "\tGender: " << gender << "\n";
+    cout << "\tCNIC: " << cnic << "\n";
+    cout << "\tMobile Number: " << mobNum << "\n";
+    cout << "\tAge: " << age << "\n";
+    cout << "\tFrom: " << city1 << "\n";
+    cout << "\tTo: " << city2 << "\n";
+    cout << "\tDate: " << d << "-" << m << "-2025\n";
+    cout << "\tTime: " << t << ":00\n";
+    cout << "\tSeat Preference: " << seatPre << "\n";
+    cout << "\tTicket Price: Rs. " << ticprice << "\n";
+    cout << "\n";
+    cout << "\t-------------------------------------------\n";
+}
+
+
+int main() {
+    string name1, name2, name3, seatPre, gender;
+    double ticketPrice;
+    long long int age;
+    string cnic, mobNum;
+    int d, m, Time, t;
+    int area1, area2;
+    int confirmBook;
+
+    string cities[] = {"Lahore", "Karachi", "Multan", "Islamabad"};
+    int numCities = sizeof(cities) / sizeof(cities[0]);
+
+    system("color E0");
+    cout << "\n\n";
+    cout << "\t*" << setw(105) << setfill('*') << "*\t" << endl;
+    cout << "\t|" << setw(105) << setfill(' ') << "|\n";
+    cout << "\t|" << setw(59) << setfill(' ') << "WELCOME TO OUR BUS SERVICE" << setw(46) << "|\n";
+    cout << "\t|" << setw(105) << setfill(' ') << "|\n";
+    cout << "\t*" << setw(105) << setfill('*') << "*\t" << "\n\n\n\n";
+
+    cout << "PLEASE ENTER THE FOLLOWING INFORMATION TO BOOK YOUR BUS TICKET:\n" << endl;
+
+    cout << "First Name: ";
+    cin >> name1;
+    for (char &c : name1) c = toupper(c);
+
+    cout << "Last Name: ";
+    cin >> name2;
+    for (char &c : name2) c = toupper(c);
+
+    cout << "Father's Name: ";
+    cin.ignore();  // Clear the buffer before using getline
+    getline(cin, name3);
+    for (char &c : name3) c = toupper(c);
+
+    do {
+        cout << "Gender (1 = Male, 2 = Female, 3 = Other): ";
+        int genderInput;
+        cin >> genderInput;
+        switch (genderInput) {
+            case 1: gender = "MALE"; break;
+            case 2: gender = "FEMALE"; break;
+            case 3: gender = "OTHER"; break;
+            default: cout << "Invalid choice. Please try again.\n";
+        }
+    } while (gender != "MALE" && gender != "FEMALE" && gender != "OTHER");
+
+    cout << "CNIC: ";
+    cin.ignore();
+    getline(cin, cnic);
+
+    cout << "Mobile Number: ";
+    getline(cin, mobNum);
+
+    system("color C0");
+
+    do {
+        cout << "Age (18-100): ";
+        cin >> age;
+        if (age < 18 || age > 100) cout << "Please enter a valid age between 18 and 100.\n";
+    } while (age < 18 || age > 100);
+
+    system("color 4E");
+
+    // Departure city selection
+    do {
+        cout << "Available Cities:\n";
+        for (int i = 0; i < numCities; ++i) {
+            cout << i + 1 << ". " << cities[i] << endl;
+        }
+        cout << "Choose your Departure City (1-" << numCities << "): ";
+        cin >> area1;
+        if (area1 < 1 || area1 > numCities) {
+            cout << "Invalid city number. Please try again.\n";
+        }
+    } while (area1 < 1 || area1 > numCities);
+
+    system("color 9E");
+
+    // Destination city selection
+    do {
+        cout << "Choose your Destination City (1-" << numCities << "): ";
+        cin >> area2;
+        if (area2 < 1 || area2 > numCities) {
+            cout << "Invalid city number. Please try again.\n";
+        } else if (area1 == area2) {
+            cout << "Departure and destination cities cannot be the same. Please choose a different destination.\n";
+        }
+    } while (area2 < 1 || area2 > numCities || area1 == area2);
+
+    string city1 = cities[area1 - 1];
+    string city2 = cities[area2 - 1];
+
+
+do {
+    cout << "Enter the Date of Travel (DD MM):\n";
+    cout << "Day: ";
+    cin >> d;
+    cout << "Month: ";
+    cin >> m;
+
+    // Validate month
+    if (m < 1 || m > 12) {
+        cout << "Invalid month. Please enter a valid month (1-12).\n";
+    }
+    // Validate day for general months (1-31)
+    else if (d < 1 || d > 31) {
+        cout << "Invalid day. Please enter a valid day (1-31).\n";
+    }
+  
+        
+    
+    // Handle February (non-leap year assumption)
+    else if (m == 2) {
+        if (d > 28) {
+            cout << "Invalid day. February has only 28 days (non-leap year). Please try again.\n";
+        }
+    } else {
+        break;  // If all checks pass, break the loop
+    }
+} while (true);
+
+    
+
+    do {
+        cout << "Choose Bus Time:\n1. 6:00 AM\n2. 9:00 AM\n3. 12:00 PM\n4. 3:00 PM\nEnter your choice (1-4): ";
+        cin >> Time;
+                system("color 2E");
+
+        switch (Time) {
+            case 1: t = 6; break;
+            case 2: t = 9; break;
+            case 3: t = 12; break;
+            case 4: t = 15; break;
+            default: cout << "Invalid choice. Please try again.\n";
+        }
+    } while (Time < 1 || Time > 4);
+
+    do {
+        cout << "Select Seat Preference (A = Aisle, W = Window, M = Middle): ";
+        cin >> seatPre;
+                system("color 80");
+
+ seatPre = toupper(seatPre[0]); 
+        if (seatPre == "A") seatPre = "AISLE";
+        else if (seatPre == "W") seatPre = "WINDOW";
+        else if (seatPre == "M") seatPre = "MIDDLE";
+        else cout << "Invalid input. Please try again.\n";
+    } while (seatPre != "AISLE" && seatPre != "WINDOW" && seatPre != "MIDDLE");
+
+    cout << "\nTicket Prices:\n\tBusiness Class: Rs. 5000\n\tClassic Class: Rs. 3000\n";
+    char ticketClass;
+    do {
+        cout << "Ticket Class (B = Business, C = Classic): ";
+        cin >> ticketClass;
+        ticketClass = toupper(ticketClass);
+        if (ticketClass == 'B') ticketPrice = 5000;
+        else if (ticketClass == 'C') ticketPrice = 3000;
+        else cout << "Invalid input. Please try again.\n";
+    } while (ticketClass != 'B' && ticketClass != 'C');
+
+    cout << "\nConfirm Booking? (1 = Yes, 0 = No): ";
+    cin >> confirmBook;
+
+    if (confirmBook == 1) {
+        srand(time(0));
+        string bookRef = "BS" + to_string(rand() % 900000 + 100000);
+        ticket(bookRef, name1, name2, name3, gender, cnic, mobNum, age, city1, city2, d, m, t, seatPre, ticketPrice);
+    } else {
+        cout << "\nThank you for using our service!\n";
+    }
+
+}
